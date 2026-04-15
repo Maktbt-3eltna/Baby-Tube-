@@ -1,0 +1,396 @@
+<!doctype html>
+
+<html lang="ar" dir="rtl">  
+<head>  
+  <meta charset="utf-8" />  
+  <meta name="viewport" content="width=device-width, initial-scale=1" />  
+  <meta name="theme-color" content="#0b5ed7" />  
+  <title>بيبي تيوب</title>    <style>  
+    :root{  
+      --blue:#0b5ed7;  
+      --card: rgba(11, 94, 215, .90);  
+      --b1:#0b0b0b;  
+      --b2:#151515;  
+      --r:28px;  
+    }  
+    *{box-sizing:border-box}  
+    html,body{height:100%}  
+    body{  
+      margin:0;  
+      font-family: system-ui, -apple-system, "Segoe UI", Tahoma, Arial, sans-serif;  
+      background: #071a2b url("bg.png") center / cover no-repeat fixed;  
+    }  
+    @media (max-width:768px){  
+      body{ background-attachment: scroll; }  
+    }  
+  
+    .wrap{max-width:520px;margin:0 auto;padding:16px 14px 44px}  
+    .top{  
+      text-align:center;font-weight:900;font-size:34px;margin:10px 0 18px;  
+      color:#111;text-shadow:0 1px 0 rgba(255,255,255,.65)  
+    }  
+    .card{  
+      background:var(--card);border-radius:var(--r);  
+      padding:24px 14px 16px;  
+      box-shadow:0 14px 28px rgba(0,0,0,.22);  
+      border:1px solid rgba(255,255,255,.12)  
+    }  
+    .brand{text-align:center;color:#fff;margin-bottom:14px}  
+    .brand h1{margin:0;font-size:44px;font-weight:900}  
+    .brand p{margin:10px 0 0;font-size:18px;opacity:.9;font-weight:700}  
+  
+    .list{display:grid;gap:14px;padding:6px 6px 10px}  
+  
+    .ep-btn{  
+      width:100%;border:0;cursor:pointer;  
+      padding:22px 16px;border-radius:var(--r);  
+      background:linear-gradient(180deg,var(--b2),var(--b1));  
+      color:#fff;font-size:30px;font-weight:900;  
+      box-shadow:0 10px 18px rgba(0,0,0,.26);  
+      text-align:center;  
+    }  
+    .ep-btn:active{transform:scale(.99)}  
+  
+    .panel{  
+      background:rgba(255,255,255,.98);  
+      border-radius:18px;padding:14px;  
+      box-shadow:0 12px 22px rgba(0,0,0,.16);  
+      border:1px solid rgba(0,0,0,.06);  
+      overflow:hidden;  
+      animation: panelIn .22s ease both;  
+      transform-origin: top;  
+    }  
+    @keyframes panelIn{  
+      from{opacity:0; transform: translateY(-6px) scaleY(.985);}  
+      to{opacity:1; transform: translateY(0) scaleY(1);}  
+    }  
+  
+    .placeholder{  
+      width:100%;aspect-ratio:16/9;border-radius:16px;  
+      border:1px dashed rgba(0,0,0,.2);  
+      background:linear-gradient(135deg,#eef3ff,#f8faff);  
+      display:grid;place-items:center;padding:10px;text-align:center;  
+      font-weight:900;color:#1a2a44;  
+    }  
+    video{width:100%;display:block;border-radius:16px;background:#000}  
+  
+    .dl{  
+      width:100%;margin-top:14px;padding:18px 16px;border:0;  
+      cursor:pointer;border-radius:var(--r);  
+      background:linear-gradient(180deg,var(--b2),var(--b1));  
+      color:#fff;font-size:26px;font-weight:900;  
+      box-shadow:0 10px 18px rgba(0,0,0,.26);  
+    }  
+    .dl:disabled{opacity:.55;cursor:not-allowed}  
+  
+    .note{margin-top:10px;font-size:12.5px;color:rgba(0,0,0,.7);text-align:center;line-height:1.6}  
+  
+    /* ===== Promo للحلقات 26..75 ===== */  
+    .promo{  
+      position:relative;  
+      width:100%;  
+      aspect-ratio:16/9;  
+      border-radius:16px;  
+      overflow:hidden;  
+      background:#000;  
+      border:1px solid rgba(0,0,0,.12);  
+      display:block;  
+      text-decoration:none;  
+      color:#fff;  
+    }  
+    .promo::before{  
+      content:"";  
+      position:absolute; inset:0;  
+      background:url("bg.png") center/cover no-repeat;  
+      filter: saturate(1.1) contrast(1.05) brightness(.75);  
+      transform: scale(1.05);  
+    }  
+    .promo::after{  
+      content:"";  
+      position:absolute; inset:0;  
+      background:  
+        radial-gradient(120% 80% at 50% 20%, rgba(255,255,255,.08), transparent 55%),  
+        linear-gradient(to top, rgba(0,0,0,.72), rgba(0,0,0,.12));  
+    }  
+    .promo .badge{  
+      position:absolute; top:14px; left:14px;  
+      background: rgba(0,0,0,.55);  
+      border:1px solid rgba(255,255,255,.18);  
+      padding:8px 10px;  
+      border-radius:999px;  
+      font-weight:900;  
+      font-size:13px;  
+      backdrop-filter: blur(6px);  
+      z-index:2;  
+      display:flex; align-items:center; gap:8px;  
+    }  
+    .promo .tri{  
+      width:0;height:0;  
+      border-top:7px solid transparent;  
+      border-bottom:7px solid transparent;  
+      border-left:12px solid #fff;  
+    }  
+    .promo .frame{  
+      position:absolute; inset:0;  
+      z-index:2;  
+      display:flex;  
+      flex-direction:column;  
+      justify-content:flex-end;  
+      padding:16px;  
+      gap:10px;  
+    }  
+    .promo .cinema-text{  
+      font-weight:1000;  
+      font-size:26px;  
+      line-height:1.25;  
+      text-shadow: 0 8px 22px rgba(0,0,0,.55);  
+      transform: translateY(120%);  
+      opacity:0;  
+      animation: riseUp .65s cubic-bezier(.2,.9,.2,1) forwards;  
+    }  
+    @keyframes riseUp{ to { transform: translateY(0); opacity:1; } }  
+  
+    .promo .subline{  
+      color:rgba(255,255,255,.88);  
+      font-weight:800;  
+      font-size:14px;  
+      opacity:0;  
+      transform: translateY(12px);  
+      animation: subIn .55s ease forwards;  
+      animation-delay:.18s;  
+    }  
+    @keyframes subIn{ to { opacity:1; transform: translateY(0); } }  
+  
+    .promo .cta{  
+      margin-top:2px;  
+      width:100%;  
+      border-radius:16px;  
+      padding:14px 14px;  
+      font-weight:1000;  
+      font-size:18px;  
+      color:#101010;  
+      background: linear-gradient(180deg, #ffffff, #e9f0ff);  
+      box-shadow: 0 12px 26px rgba(0,0,0,.25);  
+      text-align:center;  
+    }  
+  
+    /* ===== إعلان تحت خالص ===== */  
+    .bottom-ad{  
+      display:block;  
+      margin:14px 6px 2px;  
+      text-decoration:none;  
+      border-radius:22px;  
+      overflow:hidden;  
+      border:1px solid rgba(255,255,255,.18);  
+      box-shadow:0 14px 30px rgba(0,0,0,.22);  
+      background: rgba(0,0,0,.18);  
+      transition: transform .18s ease, filter .18s ease;  
+    }  
+    .bottom-ad:hover{transform: translateY(-2px); filter: brightness(1.04)}  
+    .bottom-ad .inner{  
+      padding:16px 16px;  
+      display:flex;  
+      align-items:center;  
+      justify-content:space-between;  
+      gap:14px;  
+      background: rgba(11, 94, 215, .18);  
+      backdrop-filter: blur(8px);  
+      color:#fff;  
+      font-weight:1000;  
+      font-size:18px;  
+      text-shadow: 0 10px 28px rgba(0,0,0,.45);  
+    }  
+    .bottom-ad .pill{  
+      flex:0 0 auto;  
+      padding:10px 12px;  
+      border-radius:999px;  
+      color:#111;  
+      font-weight:1000;  
+      background: linear-gradient(180deg, #ffffff, #e9f0ff);  
+      border:1px solid rgba(255,255,255,.65);  
+      white-space:nowrap;  
+    }  
+  </style>  </head>  <body>  
+  <div class="wrap">  
+    <div class="top">😍 مشاهدة ممتعة</div>  <section class="card">  
+  <header class="brand">  
+    <h1>بيبي تيوب</h1>  
+    <p>اختر الحلقة للمشاهدة أو التحميل</p>  
+  </header>  
+
+  <div class="list" id="list">  
+    <!-- الحلقات 1..25 (روابط الفيديو متضافة) -->  
+    <div class="item"><button class="ep-btn" data-ep="1"  data-video="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/1.mp4"  data-download="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/1.mp4">الحلقة 1</button><div class="panel" hidden><div class="media"></div><button class="dl">تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="2"  data-video="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/2.mp4"  data-download="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/2.mp4">الحلقة 2</button><div class="panel" hidden><div class="media"></div><button class="dl">تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="3"  data-video="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/3.mp4"  data-download="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/3.mp4">الحلقة 3</button><div class="panel" hidden><div class="media"></div><button class="dl">تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="4"  data-video="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/4.mp4"  data-download="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/4.mp4">الحلقة 4</button><div class="panel" hidden><div class="media"></div><button class="dl">تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="5"  data-video="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/5.mp4"  data-download="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/5.mp4">الحلقة 5</button><div class="panel" hidden><div class="media"></div><button class="dl">تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="6"  data-video="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/6.mp4"  data-download="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/6.mp4">الحلقة 6</button><div class="panel" hidden><div class="media"></div><button class="dl">تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="7"  data-video="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/7.mp4"  data-download="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/7.mp4">الحلقة 7</button><div class="panel" hidden><div class="media"></div><button class="dl">تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="8"  data-video="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/8.mp4"  data-download="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/8.mp4">الحلقة 8</button><div class="panel" hidden><div class="media"></div><button class="dl">تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="9"  data-video="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/9.mp4"  data-download="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/9.mp4">الحلقة 9</button><div class="panel" hidden><div class="media"></div><button class="dl">تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="10" data-video="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/10.mp4" data-download="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/10.mp4">الحلقة 10</button><div class="panel" hidden><div class="media"></div><button class="dl">تحميل الحلقة</button><div class="note"></div></div></div>  
+
+    <div class="item"><button class="ep-btn" data-ep="11" data-video="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/11.mp4" data-download="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/11.mp4">الحلقة 11</button><div class="panel" hidden><div class="media"></div><button class="dl">تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="12" data-video="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/12.mp4" data-download="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/12.mp4">الحلقة 12</button><div class="panel" hidden><div class="media"></div><button class="dl">تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="13" data-video="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/13.mp4" data-download="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/13.mp4">الحلقة 13</button><div class="panel" hidden><div class="media"></div><button class="dl">تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="14" data-video="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/14.mp4" data-download="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/14.mp4">الحلقة 14</button><div class="panel" hidden><div class="media"></div><button class="dl">تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="15" data-video="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/15.mp4" data-download="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/15.mp4">الحلقة 15</button><div class="panel" hidden><div class="media"></div><button class="dl">تحميل الحلقة</button><div class="note"></div></div></div>  
+
+    <div class="item"><button class="ep-btn" data-ep="16" data-video="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/16.mp4" data-download="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/16.mp4">الحلقة 16</button><div class="panel" hidden><div class="media"></div><button class="dl">تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="17" data-video="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/17.mp4" data-download="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/17.mp4">الحلقة 17</button><div class="panel" hidden><div class="media"></div><button class="dl">تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="18" data-video="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/18.mp4" data-download="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/18.mp4">الحلقة 18</button><div class="panel" hidden><div class="media"></div><button class="dl">تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="19" data-video="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/19.mp4" data-download="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/19.mp4">الحلقة 19</button><div class="panel" hidden><div class="media"></div><button class="dl">تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="20" data-video="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/20.mp4" data-download="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/20.mp4">الحلقة 20</button><div class="panel" hidden><div class="media"></div><button class="dl">تحميل الحلقة</button><div class="note"></div></div></div>  
+
+    <div class="item"><button class="ep-btn" data-ep="21" data-video="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/21.mp4" data-download="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/21.mp4">الحلقة 21</button><div class="panel" hidden><div class="media"></div><button class="dl">تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="22" data-video="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/22.mp4" data-download="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/22.mp4">الحلقة 22</button><div class="panel" hidden><div class="media"></div><button class="dl">تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="23" data-video="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/23.mp4" data-download="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/23.mp4">الحلقة 23</button><div class="panel" hidden><div class="media"></div><button class="dl">تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="24" data-video="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/24.mp4" data-download="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/24.mp4">الحلقة 24</button><div class="panel" hidden><div class="media"></div><button class="dl">تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="25" data-video="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/25.mp4" data-download="https://uploads.zadlibrary.com/wp-content/uploads/2026/04/25.mp4">الحلقة 25</button><div class="panel" hidden><div class="media"></div><button class="dl">تحميل الحلقة</button><div class="note"></div></div></div>  
+
+    <!-- الحلقات 26..75 (مقفولة = هتطلع Promo تلقائيًا) -->  
+    <div class="item"><button class="ep-btn" data-ep="26" data-video="" data-download="">الحلقة 26</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="27" data-video="" data-download="">الحلقة 27</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="28" data-video="" data-download="">الحلقة 28</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="29" data-video="" data-download="">الحلقة 29</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="30" data-video="" data-download="">الحلقة 30</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+
+    <div class="item"><button class="ep-btn" data-ep="31" data-video="" data-download="">الحلقة 31</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="32" data-video="" data-download="">الحلقة 32</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="33" data-video="" data-download="">الحلقة 33</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="34" data-video="" data-download="">الحلقة 34</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="35" data-video="" data-download="">الحلقة 35</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+
+    <div class="item"><button class="ep-btn" data-ep="36" data-video="" data-download="">الحلقة 36</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="37" data-video="" data-download="">الحلقة 37</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="38" data-video="" data-download="">الحلقة 38</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="39" data-video="" data-download="">الحلقة 39</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="40" data-video="" data-download="">الحلقة 40</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+
+    <div class="item"><button class="ep-btn" data-ep="41" data-video="" data-download="">الحلقة 41</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="42" data-video="" data-download="">الحلقة 42</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="43" data-video="" data-download="">الحلقة 43</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="44" data-video="" data-download="">الحلقة 44</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="45" data-video="" data-download="">الحلقة 45</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+
+    <div class="item"><button class="ep-btn" data-ep="46" data-video="" data-download="">الحلقة 46</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="47" data-video="" data-download="">الحلقة 47</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="48" data-video="" data-download="">الحلقة 48</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="49" data-video="" data-download="">الحلقة 49</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="50" data-video="" data-download="">الحلقة 50</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+
+    <div class="item"><button class="ep-btn" data-ep="51" data-video="" data-download="">الحلقة 51</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="52" data-video="" data-download="">الحلقة 52</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="53" data-video="" data-download="">الحلقة 53</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="54" data-video="" data-download="">الحلقة 54</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="55" data-video="" data-download="">الحلقة 55</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+
+    <div class="item"><button class="ep-btn" data-ep="56" data-video="" data-download="">الحلقة 56</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="57" data-video="" data-download="">الحلقة 57</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="58" data-video="" data-download="">الحلقة 58</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="59" data-video="" data-download="">الحلقة 59</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="60" data-video="" data-download="">الحلقة 60</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+
+    <div class="item"><button class="ep-btn" data-ep="61" data-video="" data-download="">الحلقة 61</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="62" data-video="" data-download="">الحلقة 62</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="63" data-video="" data-download="">الحلقة 63</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="64" data-video="" data-download="">الحلقة 64</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="65" data-video="" data-download="">الحلقة 65</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+
+    <div class="item"><button class="ep-btn" data-ep="66" data-video="" data-download="">الحلقة 66</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="67" data-video="" data-download="">الحلقة 67</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="68" data-video="" data-download="">الحلقة 68</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="69" data-video="" data-download="">الحلقة 69</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="70" data-video="" data-download="">الحلقة 70</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+
+    <div class="item"><button class="ep-btn" data-ep="71" data-video="" data-download="">الحلقة 71</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="72" data-video="" data-download="">الحلقة 72</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="73" data-video="" data-download="">الحلقة 73</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="74" data-video="" data-download="">الحلقة 74</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+    <div class="item"><button class="ep-btn" data-ep="75" data-video="" data-download="">الحلقة 75</button><div class="panel" hidden><div class="media"></div><button class="dl" disabled>تحميل الحلقة</button><div class="note"></div></div></div>  
+  </div>  
+
+  <!-- إعلان تحت خالص -->  
+  <a class="bottom-ad" href="https://www.facebook.com/share/14WiyqiTqZE/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">  
+    <div class="inner">  
+      <div>اتفرج على قصص الانبيا كامله 😍</div>  
+      <div class="pill">افتح الآن</div>  
+    </div>  
+  </a>  
+
+</section>
+
+  </div>    <script>  
+    const list = document.getElementById("list");  
+    const FB_LINK = "https://www.facebook.com/share/14WiyqiTqZE/?mibextid=wwXIfr";  
+  
+    // فتح تحت نفس الحلقة + يقفل أي حلقة تانية  
+    list.addEventListener("click", (e) => {  
+      const btn = e.target.closest(".ep-btn");  
+      if (!btn) return;  
+  
+      const item = btn.parentElement;  
+      const panel = item.querySelector(".panel");  
+      const media = panel.querySelector(".media");  
+      const dlBtn = panel.querySelector(".dl");  
+      const note = panel.querySelector(".note");  
+  
+      // اقفل الباقي  
+      list.querySelectorAll(".panel").forEach(p => { if (p !== panel) p.hidden = true; });  
+  
+      // toggle  
+      panel.hidden = !panel.hidden;  
+      if (panel.hidden) return;  
+  
+      const ep = Number(btn.dataset.ep);  
+      const videoUrl = (btn.dataset.video || "").trim();  
+      const downloadUrl = (btn.dataset.download || "").trim();  
+      const finalUrl = downloadUrl || videoUrl;  
+  
+      // الحلقات من 26 لحد 75: Promo بدل الفيديو  
+      if (ep >= 26) {  
+        media.innerHTML = `  
+          <a class="promo" href="${FB_LINK}" target="_blank" rel="noopener noreferrer">  
+            <div class="badge"><span class="tri"></span> محتوى مميز</div>  
+            <div class="frame">  
+              <div class="cinema-text">اشترك في الباقه الجديده🗿</div>  
+              <div class="subline">اضغط هنا علشان تكمل باقي الحلقات</div>  
+              <div class="cta">افتح صفحة الاشتراك</div>  
+            </div>  
+          </a>  
+        `;  
+        dlBtn.disabled = true;  
+        note.textContent = "هذه الحلقة ضمن الباقة الجديدة.";  
+        setTimeout(() => panel.scrollIntoView({behavior:"smooth", block:"nearest"}), 10);  
+        return;  
+      }  
+  
+      // الحلقات 1..25: فيديو  
+      if (videoUrl){  
+        media.innerHTML = `<video controls preload="metadata" src="${videoUrl}"></video>`;  
+        note.textContent = " ";  
+      } else {  
+        media.innerHTML = `<div class="placeholder">مكان الفيديو هنا<br><span style="font-weight:700;opacity:.75;font-size:13px;">(لسه مفيش فيديو مضاف)</span></div>`;  
+        note.textContent = "مفيش روابط مضافة للحلقة دي لسه.";  
+      }  
+  
+      dlBtn.disabled = !finalUrl;  
+  
+      dlBtn.onclick = () => {  
+        if (!finalUrl) return;  
+        const filename = `episode-${String(ep).padStart(2,"0")}.mp4`;  
+        const a = document.createElement("a");  
+        a.href = finalUrl;  
+        a.download = filename;  
+        a.target = "_blank";  
+        a.rel = "noopener noreferrer";  
+        document.body.appendChild(a);  
+        a.click();  
+        a.remove();  
+      };  
+  
+      setTimeout(() => panel.scrollIntoView({behavior:"smooth", block:"nearest"}), 10);  
+    });  
+  </script>  </body>  
+</html> 
